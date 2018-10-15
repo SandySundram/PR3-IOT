@@ -1,55 +1,16 @@
+const fs = require("fs");
 const http = require("http");
 const express = require("express");
 
 const { ApolloServer, gql } = require("apollo-server-express");
 
-const { PubSub } = require("apollo-server-express");
-const pubsub = new PubSub();
+const { resolvers } = require("./resolvers");
 
-const typeDefs = gql`
-  type Subscription {
-    postAdded: Post
-  }
-  type Query {
-    posts: [Post]
-  }
-  type Mutation {
-    addPost(author: String, comment: String): Post
-  }
-  type Post {
-    author: String
-    comment: String
-  }
-`;
+const typeDefs = gql(
+  fs.readFileSync(__dirname.concat("/schema.graphql"), "utf8")
+);
 
-const POST_ADDED = "POST_ADDED";
-
-var posts = [];
-
-const resolvers = {
-  Subscription: {
-    postAdded: {
-      // Additional event labels can be passed to asyncIterator creation
-      subscribe: () => pubsub.asyncIterator([POST_ADDED])
-    }
-  },
-  Query: {
-    posts(root, args, context) {
-      return posts;
-      // return postController.posts();
-    }
-  },
-  Mutation: {
-    addPost(root, args, context) {
-      pubsub.publish(POST_ADDED, { postAdded: args });
-      posts.push(args);
-      return args;
-      // return postController.addPost(args);
-    }
-  }
-};
-
-const PORT = 4000;
+const port = 4000;
 const app = express();
 const apolloServer = new ApolloServer({ typeDefs, resolvers });
 
@@ -59,12 +20,12 @@ const httpServer = http.createServer(app);
 apolloServer.installSubscriptionHandlers(httpServer);
 
 // ⚠️ Pay attention to the fact that we are calling `listen` on the http server variable, and not on `app`.
-httpServer.listen(PORT, () => {
+httpServer.listen(port, () => {
   console.log(
-    `🚀 Server ready at http://localhost:${PORT}${apolloServer.graphqlPath}`
+    `🚀 Server ready at http://localhost:${port}${apolloServer.graphqlPath}`
   );
   console.log(
-    `🚀 Subscriptions ready at ws://localhost:${PORT}${
+    `🚀 Subscriptions ready at ws://localhost:${port}${
       apolloServer.subscriptionsPath
     }`
   );
