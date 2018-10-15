@@ -1,0 +1,13 @@
+{
+  "name": "project-3",
+  "version": "0.0.1",
+  "main": "server.js",
+  "repository": "git@github.com:SandySundram/PR3-IOT.git",
+  "author": "Kit Jonathan Te <kjonathante@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "apollo-server-express": "^2.1.0",
+    "express": "^4.16.4",
+    "graphql": "^14.0.2"
+  }
+}
