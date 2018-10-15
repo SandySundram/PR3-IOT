@@ -29,5 +29,6 @@ const resolvers = {
 };
 
 module.exports = {
-  resolvers: resolvers
+  resolvers: resolvers,
+  pubsub: pubsub
 };

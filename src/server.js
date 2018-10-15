@@ -2,9 +2,11 @@ const fs = require("fs");
 const http = require("http");
 const express = require("express");
 
+const mqttBroker = require("./mqttBroker");
+
 const { ApolloServer, gql } = require("apollo-server-express");
 
-const { resolvers } = require("./resolvers");
+const { resolvers, pubsub } = require("./resolvers");
 
 const typeDefs = gql(
   fs.readFileSync(__dirname.concat("/schema.graphql"), "utf8")
@@ -29,4 +31,5 @@ httpServer.listen(port, () => {
       apolloServer.subscriptionsPath
     }`
   );
+  mqttBroker.start(pubsub);
 });
