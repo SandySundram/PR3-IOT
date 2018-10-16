@@ -1,13 +1,14 @@
   type Subscription {
-    postAdded: Post
+    eventAdded: Event!
   }
   type Query {
-    posts: [Post]
+    events: [Event!]!
   }
   type Mutation {
-    addPost(author: String, comment: String): Post
+    createEvent(topic: String!, message: String!): Event!
   }
-  type Post {
-    author: String
-    comment: String
+  type Event {
+    _id: ID!
+    topic: String!
+    message: String!
   }

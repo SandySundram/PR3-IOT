@@ -1,28 +1,31 @@
+const Event = require('./models/event');
+
 const { PubSub } = require("apollo-server-express");
 const pubsub = new PubSub();
 
-const POST_ADDED = "POST_ADDED";
-
-let posts = [];
+const TO_DEVICE = "TO_DEVICE";
+const FROM_DEVICE = "FROM_DEVICE";
 
 const resolvers = {
   Subscription: {
-    postAdded: {
+    eventAdded: {
       // Additional event labels can be passed to asyncIterator creation
-      subscribe: () => pubsub.asyncIterator([POST_ADDED])
+      subscribe: () => pubsub.asyncIterator([FROM_DEVICE])
     }
   },
   Query: {
-    posts(root, args, context) {
-      return posts;
+    async events(root, args, context) {
+      const events = await Event.read(context.db, args)
+      return events;
       // return postController.posts();
     }
   },
   Mutation: {
-    addPost(root, args, context) {
-      pubsub.publish(POST_ADDED, { postAdded: args });
-      posts.push(args);
-      return args;
+    async createEvent(root, args, context) {
+      const newEvent = await Event.create(context.db, args)
+      // pubsub.publish(TO_DEVICE, { eventAdded: newEvent });
+      context.moscaServer.publish({topic: newEvent.topic, payload: newEvent.message})
+      return newEvent;
       // return postController.addPost(args);
     }
   }
