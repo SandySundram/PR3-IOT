@@ -1,8 +1,10 @@
 const mosca = require("mosca");
+const Event = require("./models/event")
 
-const POST_ADDED = "POST_ADDED";
+const TO_DEVICE = "TO_DEVICE";
+const FROM_DEVICE = "FROM_DEVICE";
 
-function start(pubsub) {
+function start(pubsub, db) {
   const moscaServer = new mosca.Server({
     port: 1883
   });
@@ -19,7 +21,13 @@ function start(pubsub) {
   moscaServer.on("published", function(packet, client) {
     // console.log("Published", packet);
     // console.log("Client", client);
-    pubsub.publish(POST_ADDED, { postAdded: {author: 'xxx', comment: 'xxx'} });
+    const topic = packet.topic;
+    const message = packet.payload.toString("utf8");
+    if (topic === FROM_DEVICE) {
+      const newEvent = Event.create(db, {topic,message})
+      pubsub.publish(FROM_DEVICE, { eventAdded: newEvent });  
+    }
+    console.log("topic", packet.topic);
     console.log("payload", packet.payload.toString("utf8"));
   });
 
@@ -41,6 +49,7 @@ function start(pubsub) {
   //   ledCommand = ledCommand === "001" ? "002" : "001";
   //   moscaServer.publish({ topic: "LEDToggle", payload: ledCommand });
   // }, 1000);
+  return moscaServer;
 }
 
 module.exports = {
