@@ -18,7 +18,8 @@ const resolvers = {
       const events = await Event.read(context.db, args)
       return events;
       // return postController.posts();
-    }
+    },
+    feed: () => 'Test feed'
   },
   Mutation: {
     async createEvent(root, args, context) {

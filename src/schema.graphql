@@ -3,6 +3,7 @@
   }
   type Query {
     events: [Event!]!
+    feed: String!
   }
   type Mutation {
     createEvent(topic: String!, message: String!): Event!
