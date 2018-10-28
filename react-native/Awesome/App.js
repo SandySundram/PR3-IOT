@@ -58,16 +58,18 @@ const instructions = Platform.select({
     "Shake or press menu button for dev menu"
 });
 
-type Props = {};
-export default class App extends Component<Props> {
+
+export default class App extends Component {
   render() {
     return (
       <ApolloProvider client={client}>
-        <Events />
-        <View>
+        <View style={styles.container}>
+          <Events />
+        </View>
+        <View style={styles.container}>
           <EventAdded />
         </View>
-        <View>
+        <View style={styles.container}>
           <CreateEvent />
         </View>
         <View style={styles.container}>
