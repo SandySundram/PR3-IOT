@@ -53,7 +53,7 @@ class Login extends Component {
         <TextInput
           style={{ height: 40, backgroundColor: "powderblue" }}
           value={email}
-          onChangeText={t => this.setState({ email: t })}
+          onChangeText={email => this.setState({ email })}
           keyboardType="email-address"
           autoCapitalize="none"
         />
@@ -62,14 +62,14 @@ class Login extends Component {
         <TextInput
           style={{ height: 40, backgroundColor: "powderblue" }}
           value={password}
-          onChangeText={t => this.setState({ password: t })}
+          onChangeText={password => this.setState({ password })}
           secureTextEntry={true}
         />
 
         <Mutation
           mutation={login ? LOGIN_MUTATION : SIGNUP_MUTATION}
-          onCompleted={data => this._confirm(data)}
-          onError={error => this._showError(error)}
+          onCompleted={data => this.handleCompleted(data)}
+          onError={error => this.handleError(error)}
         >
           {mutateFunc => (
             <TouchableOpacity
@@ -87,28 +87,26 @@ class Login extends Component {
           </Text>
         </TouchableOpacity>
 
-        <View><Text>{this.state.error}</Text></View>
+        <View>
+          <Text>{this.state.error}</Text>
+        </View>
       </View>
     );
   }
 
-  _confirm = async data => {
+  handleCompleted = async data => {
     const { token } = this.state.login ? data.login : data.signup;
-    this._storeData(token);
-    this.props.onSucceed();
-  };
-
-  _showError = error => {
-    console.log("[Inside _showError]")
-    this.setState({error: error.toString()})
-  }
-
-  _storeData = async token => {
     try {
       await AsyncStorage.setItem("token", token);
     } catch (error) {
       // Error saving data
+      return this.setState({ error: error.toString() });
     }
+    return this.props.onSucceed();
+  };
+
+  handleError = (error) => {
+    this.setState({ error: error.toString() });
   };
 }
 
