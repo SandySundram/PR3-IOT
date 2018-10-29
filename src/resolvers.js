@@ -4,6 +4,7 @@ const { PubSub } = require("apollo-server-express");
 
 const Event = require("./models/event");
 const User = require("./models/user");
+const {getAuthorizedUserId} = require("./authorization")
 
 const pubsub = new PubSub();
 
@@ -35,6 +36,26 @@ const resolvers = {
       });
       return newEvent;
       // return postController.addPost(args);
+    },
+    async turnOnWithAuth(root, args, context) {
+      const userId = getAuthorizedUserId(context);
+
+      const newEvent = await Event.create(context.db, {topic: TO_DEVICE, message: "001"});
+      context.moscaServer.publish({
+        topic: newEvent.topic,
+        payload: newEvent.message
+      });
+      return newEvent;
+    },
+    async turnOffWithAuth(root, args, context) {
+      const userId = getAuthorizedUserId(context);
+
+      const newEvent = await Event.create(context.db, {topic: TO_DEVICE, message: "000"});
+      context.moscaServer.publish({
+        topic: newEvent.topic,
+        payload: newEvent.message
+      });
+      return newEvent;
     },
     async signup(root, args, context) {
       const password = await bcrypt.hash(args.password, 10);
