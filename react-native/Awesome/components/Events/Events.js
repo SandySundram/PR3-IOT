@@ -48,13 +48,13 @@ const Events = () => (
         });
       }
       return (
-        <View>
+        <>
           {data.events.map(x => (
             <Text key={x._id}>
               {x._id}-{x.topic}-{x.message}
             </Text>
           ))}
-        </View>
+        </>
       );
     }}
   </Query>
