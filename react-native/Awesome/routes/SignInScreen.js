@@ -7,6 +7,7 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
+import Login from "../components/Login/Login"
 
 class SignInScreen extends React.Component {
   static navigationOptions = {
@@ -16,15 +17,20 @@ class SignInScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Button title="Sign in!" onPress={this._signInAsync} />
+        {/* <Button title="Sign in!" onPress={this._signInAsync} /> */}
+        <Login onSucceed={ this.handleSucceed }/>
       </View>
     );
   }
 
-  _signInAsync = async () => {
-    await AsyncStorage.setItem('userToken', 'abc');
+  handleSucceed = () => {
     this.props.navigation.navigate('App');
-  };
+  }
+
+  // _signInAsync = async () => {
+  //   await AsyncStorage.setItem('userToken', 'abc');
+  //   this.props.navigation.navigate('App');
+  // };
 }
 
 export default SignInScreen
