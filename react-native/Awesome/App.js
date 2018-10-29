@@ -20,6 +20,7 @@ import { getMainDefinition } from "apollo-utilities";
 import Events from "./components/Events/Events";
 import EventAdded from "./components/EventAdded/EventAdded"
 import CreateEvent from "./components/CreateEvent/CreateEvent"
+import Routes from "./routes"
 
 // Create an http link:
 const httpLink = new HttpLink({
@@ -63,20 +64,7 @@ export default class App extends Component {
   render() {
     return (
       <ApolloProvider client={client}>
-        <View style={styles.container}>
-          <Events />
-        </View>
-        <View style={styles.container}>
-          <EventAdded />
-        </View>
-        <View style={styles.container}>
-          <CreateEvent />
-        </View>
-        <View style={styles.container}>
-          <Text style={styles.welcome}>Welcome to React Native!</Text>
-          <Text style={styles.instructions}>To get started, edit App.js</Text>
-          <Text style={styles.instructions}>{instructions}</Text>
-        </View>
+        <Routes />
       </ApolloProvider>
     );
   }
@@ -100,3 +88,19 @@ const styles = StyleSheet.create({
     marginBottom: 5
   }
 });
+/*
+        <View style={styles.container}>
+          <Events />
+        </View>
+        <View style={styles.container}>
+          <EventAdded />
+        </View>
+        <View style={styles.container}>
+          <CreateEvent />
+        </View>
+        <View style={styles.container}>
+          <Text style={styles.welcome}>Welcome to React Native!</Text>
+          <Text style={styles.instructions}>To get started, edit App.js</Text>
+          <Text style={styles.instructions}>{instructions}</Text>
+        </View>
+*/
