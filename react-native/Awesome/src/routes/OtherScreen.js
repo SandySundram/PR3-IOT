@@ -1,16 +1,16 @@
-import React from 'react';
+import React from "react";
 import {
   ActivityIndicator,
-  AsyncStorage,
   Button,
   StatusBar,
   StyleSheet,
-  View,
-} from 'react-native';
+  View
+} from "react-native";
+import { onSignOut } from "../auth";
 
 class OtherScreen extends React.Component {
   static navigationOptions = {
-    title: 'Lots of features here',
+    title: "Lots of features here"
   };
 
   render() {
@@ -23,17 +23,17 @@ class OtherScreen extends React.Component {
   }
 
   _signOutAsync = async () => {
-    await AsyncStorage.clear();
-    this.props.navigation.navigate('Auth');
+    await onSignOut;
+    this.props.navigation.navigate("Auth");
   };
 }
 
-export default OtherScreen
+export default OtherScreen;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+    alignItems: "center",
+    justifyContent: "center"
+  }
 });

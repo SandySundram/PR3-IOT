@@ -17,7 +17,8 @@ import { WebSocketLink } from "apollo-link-ws";
 import { split } from "apollo-link";
 import { getMainDefinition } from "apollo-utilities";
 
-import Routes from "./routes"
+import Routes from "./routes/routes";
+import { getToken } from "./auth";
 
 // Create an http link:
 const httpLink = new HttpLink({
@@ -33,9 +34,9 @@ const wsLink = new WebSocketLink({
 });
 
 // Authentication link:
-const authLink = setContext((_, { headers }) => {
+const authLink = setContext(async (_, { headers }) => {
   // get the authentication token from local storage if it exists
-  const token = retrieveData("token");
+  const token = await getToken();
   // return the headers to the context so httpLink can read them
   return {
     headers: {
@@ -61,18 +62,6 @@ const client = new ApolloClient({
   link: link,
   cache: new InMemoryCache()
 });
-
-const retrieveData = async(key) => {
-  try {
-    const value = await AsyncStorage.getItem(key);
-    if (value !== null) {
-      // We have data!!
-      return value;
-    }
-  } catch (error) {
-    // Error retrieving data
-  }
-};
 
 export default class App extends Component {
   render() {

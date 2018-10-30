@@ -1,11 +1,5 @@
 import React, { Component } from "react";
-import {
-  Text,
-  View,
-  TextInput,
-  TouchableOpacity,
-  AsyncStorage
-} from "react-native";
+import { Text, View, TextInput, TouchableOpacity } from "react-native";
 import { Mutation } from "react-apollo";
 import gql from "graphql-tag";
 
@@ -96,16 +90,10 @@ class Login extends Component {
 
   handleCompleted = async data => {
     const { token } = this.state.login ? data.login : data.signup;
-    try {
-      await AsyncStorage.setItem("token", token);
-    } catch (error) {
-      // Error saving data
-      return this.setState({ error: error.toString() });
-    }
-    return this.props.onSucceed();
+    this.props.onSucceed(token);
   };
 
-  handleError = (error) => {
+  handleError = error => {
     this.setState({ error: error.toString() });
   };
 }
