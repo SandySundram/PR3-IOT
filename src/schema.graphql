@@ -9,6 +9,8 @@ type Query {
 
 type Mutation {
   createEvent(topic: String!, message: String!): Event!
+  turnOnWithAuth: Event!
+  turnOffWithAuth: Event!
   signup(email: String!, password: String!, name: String!): AuthPayload
   login(email: String!, password: String!): AuthPayload
 }
