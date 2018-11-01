@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import TurnOn from "../components/TurnOn/TurnOn";
 import TurnOff from "../components/TurnOff/TurnOff";
+import Indicator from "../components/Indicator/Indicator";
 import { removeToken } from "../auth";
 
 class HomeScreen extends React.Component {
@@ -30,6 +31,7 @@ class HomeScreen extends React.Component {
         <Text>{this.state.error}</Text>
         <TurnOn onError={this.handleError} />
         <TurnOff onError={this.handleError} />
+        <Indicator />
       </View>
     );
   }
