@@ -7,11 +7,21 @@ import {
 
 import HomeScreen from "./HomeScreen";
 import OtherScreen from "./OtherScreen";
+import AboutScreen from "./AboutScreen";
 import SignInScreen from "./SignInScreen";
+import SignOutScreen from "./SignOutScreen";
 import AuthLoadingScreen from "./AuthLoadingScreen";
+import SideBar from "./SideBar";
 
 const AppStack = createStackNavigator({ Home: HomeScreen, Other: OtherScreen });
-const AppDrawer = createDrawerNavigator({ AppStack });
+const AboutStack = createStackNavigator({ About: AboutScreen });
+const AppDrawer = createDrawerNavigator(
+  { Home: HomeScreen, About: AboutScreen, "Sign Out": SignOutScreen },
+  {
+    initialRouteName: "About",
+    contentComponent: props => <SideBar {...props} />
+  }
+);
 const AuthStack = createStackNavigator({ SignIn: SignInScreen });
 
 export default createSwitchNavigator(
