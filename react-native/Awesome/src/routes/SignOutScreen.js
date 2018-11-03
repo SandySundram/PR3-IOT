@@ -11,7 +11,8 @@ import {
   Icon,
   Right,
   Footer,
-  FooterTab
+  FooterTab,
+  H3
 } from "native-base";
 
 import { removeToken } from "../auth";
@@ -35,8 +36,8 @@ class SignOutScreen extends React.Component {
         </Content>
         <Footer>
           <FooterTab>
-            <Button full warning onPress={this.signOut}>
-              <Text>Sign Out</Text>
+            <Button full danger onPress={this.handleSignOut}>
+              <H3>Sign Out</H3>
             </Button>
           </FooterTab>
         </Footer>
@@ -44,7 +45,7 @@ class SignOutScreen extends React.Component {
     );
   }
 
-  signOut = async () => {
+  handleSignOut = async () => {
     await removeToken();
     this.props.navigation.navigate("Auth");
   };

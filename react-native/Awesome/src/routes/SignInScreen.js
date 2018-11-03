@@ -11,15 +11,12 @@ import { saveToken } from "../auth";
 
 class SignInScreen extends React.Component {
   static navigationOptions = {
-    title: "Please sign in"
+    title: "Please sign in or sign up"
   };
 
   render() {
     return (
-      <View style={styles.container}>
-        {/* <Button title="Sign in!" onPress={this._signInAsync} /> */}
-        <Login onSucceed={this.handleSucceed} />
-      </View>
+      <Login onSucceed={this.handleSucceed} />
     );
   }
 
@@ -30,11 +27,3 @@ class SignInScreen extends React.Component {
 }
 
 export default SignInScreen;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center"
-  }
-});
