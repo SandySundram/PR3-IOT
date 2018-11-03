@@ -1,7 +1,10 @@
 import React from "react";
 import gql from "graphql-tag";
 import { Mutation } from "react-apollo";
-import { Platform, StyleSheet, Text, View, Button } from "react-native";
+import {
+  Button,
+  Text
+} from "native-base";
 
 const CREATE_EVENT = gql`
   mutation TurnOffWithAuth {
@@ -18,16 +21,14 @@ const TurnOff = (props) => {
     <Mutation mutation={CREATE_EVENT} onError={error => props.onError(error)}>
       {(mutateFunc, { data }) => {
         return (
-          <View>
-            <Button
-              onPress={() =>
-                mutateFunc({
-                  variables: {}
-                })
-              }
-              title="Turn Off"
-            />
-          </View>
+          <Button
+            {...props}
+            onPress={() =>
+              mutateFunc({
+                variables: {}
+              })
+            }
+          ><Text>Turn Off</Text></Button>
         );
       }}
     </Mutation>
