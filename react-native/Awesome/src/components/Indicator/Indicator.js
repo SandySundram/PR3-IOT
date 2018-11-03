@@ -61,7 +61,7 @@ class Indicator extends React.Component {
   };
 
   // reset 
-  handelSubscriptionData = () => {
+  handleSubscriptionData = () => {
     this.state.animatedValue.setValue(0)
   }
 }
