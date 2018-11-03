@@ -25,14 +25,18 @@ class Indicator extends React.Component {
     });
 
     return (
-      <Subscription subscription={EVENTS_SUBSCRIPTION} onSubscriptionData={this.reset}>
+      <Subscription 
+        subscription={EVENTS_SUBSCRIPTION} 
+        onSubscriptionData={this.handleSubscriptionData}>
         {({ data }) => {
           if (data) {
             this.animate();
           }
           return (
             <Animated.Image
+              {...this.props}
               style={{
+                ...this.props.style,
                 width: 227,
                 height: 200,
                 transform: [{ rotate: spin }]
@@ -56,7 +60,8 @@ class Indicator extends React.Component {
     ).start();
   };
 
-  reset = () => {
+  // reset 
+  handelSubscriptionData = () => {
     this.state.animatedValue.setValue(0)
   }
 }

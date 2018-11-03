@@ -18,7 +18,7 @@ const AboutStack = createStackNavigator({ About: AboutScreen });
 const AppDrawer = createDrawerNavigator(
   { Home: HomeScreen, About: AboutScreen, "Sign Out": SignOutScreen },
   {
-    initialRouteName: "About",
+    initialRouteName: "Home",
     contentComponent: props => <SideBar {...props} />
   }
 );

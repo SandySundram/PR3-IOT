@@ -47,11 +47,11 @@ class HomeScreen extends React.Component {
           </Body>
           <Right />
         </Header>
-        <Content>
+        <Content padder >
           <Text>{this.state.error}</Text>
-          <TurnOn onError={this.handleError} />
-          <TurnOff onError={this.handleError} />
-          <Indicator />
+          <TurnOn success onError={this.handleError} />
+          <TurnOff danger style={{marginTop: 10}} onError={this.handleError} />
+          <Indicator style={{marginTop: 10, alignSelf: "center"}} resizeMode="contain"/>
         </Content>
       </Container>
     );
